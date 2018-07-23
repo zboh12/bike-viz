@@ -93,12 +93,13 @@ class Map extends React.Component {
     const loopMax = (86400000 / COMPRESSION_FACTOR) * days
     let newTime = currentTime % loopMax
 
-    // if (this.props.lastPauseTime) {
-    //   newTime += this.props.lastPauseTime
-    //   if (newTime > loopMax) {
-    //     newTime = newTime % loopMax
-    //   }
-    // }
+    if (this.props.lastPauseTime) {
+      newTime += this.props.lastPauseTime
+      if (newTime > loopMax) {
+        newTime = newTime % loopMax
+      }
+    }
+
     this.props.setAnimationTime(newTime)
 
     // this.props.updateStationStatuses(newTime, this.props.currentBucket)
@@ -165,7 +166,12 @@ class Map extends React.Component {
 
             <TimeSlider
               {...this.props}
-              startAnimation={() => this._animate()}
+              startAnimation={
+                () => {
+                  this._animate()
+                  this.props.startOrStopAnimation(true)
+                }
+              }
             />
           </MapGL> : null
       }

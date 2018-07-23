@@ -219,6 +219,20 @@ function setPauseTime (pauseTime) {
   }
 }
 
+function startOrStopAnimation (start = true) {
+  return (dispatch) => {
+    if (start) {
+      dispatch({
+        type: evt.START_ANIMATION
+      })
+    } else {
+      dispatch({
+        type: evt.PAUSE_ANIMATION
+      })
+    }
+  }
+}
+
 // Map viewport
 
 function getInitialViewport () {
@@ -430,6 +444,17 @@ function lastPauseTime (state = 0, action) {
   }
 }
 
+function animationPaused (state = true, action) {
+  switch (action.type) {
+    case evt.PAUSE_ANIMATION:
+      return true
+    case evt.START_ANIMATION:
+      return false
+    default:
+      return state
+  }
+}
+
 function tripCount (state = 0, action) {
   switch (action.type) {
     case evt.DISPLAY_TRIP_COUNT:
@@ -456,7 +481,8 @@ export const actions = {
   setPauseTime,
   setTimeInterval,
   displayTripCount,
-  reset
+  reset,
+  startOrStopAnimation
 }
 
 export default combineReducers({
@@ -476,5 +502,6 @@ export default combineReducers({
   lastPauseTime,
   stationStatusBuckets,
   currentBucket,
-  tripCount
+  tripCount,
+  animationPaused
 })

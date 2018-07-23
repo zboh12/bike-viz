@@ -12,12 +12,16 @@ const TimeSlider = (props) => {
       max={(86400000 / COMPRESSION_FACTOR) * days}
       value={props.animationTime || 0}
       onChange={(newTime) => {
-        props.setAnimationTime(newTime)
+        let pauseInterval =  props.animationTime
+        if (props.lastPauseTime) {
+          pauseInterval -= props.lastPauseTime
+        }
+        props.setPauseTime(newTime - pauseInterval)
       }}
     />
     <Button
       icon
-      disabled={!props.tripCount}
+      style={{display: (props.animationPaused ? 'block' : 'none')}}
       onClick={() => {
         const startTime = Date.now()
         props.setAnimationStartTime(startTime)
@@ -28,9 +32,12 @@ const TimeSlider = (props) => {
     </Button>
     <Button
       icon
-      disabled={!props.tripCount}
+      style={{display: (!props.animationPaused ? 'block' : 'none')}}
       onClick={() => {
+        props.setPauseTime(props.animationTime)
         // stop animation
+        window.cancelAnimationFrame(props.animationFrame)
+        props.startOrStopAnimation(false)
       }}
     >
       <Icon name='pause' />
