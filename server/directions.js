@@ -12,10 +12,10 @@ const googleMapsClient = require('@google/maps').createClient({
 })
 
 const pool = new Pool({
-  user: 'postgres',
-  host: 'ctl-mll-cambridge.mit.edu',
+  user: 'bike',
+  host: 'bike-viz-db.csljqqnmb0jn.us-east-1.rds.amazonaws.com',
   database: 'postgres',
-  password: 'CTL-DB-Pass!123', //@todo: put this somewhere more private
+  password: 'bikeviz12', //@todo: put this somewhere more private
   port: 5432,
   max: 10
 })
