@@ -3,7 +3,7 @@ const http = require('http')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
-const port = process.env.PORT || 5001
+const port = process.env.PORT || 3001
 const app = express()
 
 app.use(cors())
@@ -11,6 +11,14 @@ app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({limit: '50mb'}))
 
 const server = app.listen(port, () => console.log(`Listening on port ${port}`))
+
+// add the path module
+import path from 'path'
+// get reference to the client build directory
+const staticFiles = express.static(path.join(__dirname, '../../client/build'))
+// pass the static files (react app) to the express app.
+app.use(staticFiles)
+
 
 // const server = new http.Server(app)
 const io = require('socket.io').listen(server)
@@ -73,3 +81,4 @@ io.on('connection', (socket) => {
   })
 })
 
+app.use('/*', staticFiles)

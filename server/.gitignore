@@ -4,3 +4,4 @@ node_modules
 /resources/static/js/*.*.js
 /resources/static/js/*.*.js.map
 /yarn-error.log
+/build/*

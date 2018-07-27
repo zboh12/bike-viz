@@ -4,10 +4,14 @@
   "scripts": {
     "client": "cd ../client && yarn start",
     "server": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "build": "babel . --ignore node_modules,build --out-dir build",
+    "start": "nodemon -r babel-register server.js",
+    "start:prod": "node build/server.js"
   },
   "dependencies": {
     "@google/maps": "^0.4.5",
+    "babel-cli": "^6.26.0",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
